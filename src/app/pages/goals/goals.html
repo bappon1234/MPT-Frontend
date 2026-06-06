@@ -1,0 +1,209 @@
+<div class="goals-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="goals-content">
+
+        <!-- FIXED HEADER -->
+        <div class="goals-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="goals-body">
+
+            <!-- TOP -->
+            <div class="goals-top">
+
+                <div>
+                    <h1>Goals</h1>
+                    <span>Track your financial goals</span>
+                </div>
+
+                <button class="add-goal-btn" (click)="openGoalModal()">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Goal
+                </button>
+
+            </div>
+
+            <app-goal-modal *ngIf="showGoalModal" [mode]="modalMode" [goal]="selectedGoal" (close)="closeGoalModal()"
+                (goalCreated)="getGoals()"></app-goal-modal>
+
+            <!-- SKELETON -->
+            <div class="goal-grid" *ngIf="loading">
+
+                <div class="goal-skeleton" *ngFor="let item of [1,2,3,4]">
+                    <div class="skeleton-line lg"></div>
+                    <div class="skeleton-line md"></div>
+                    <div class="skeleton-progress"></div>
+                </div>
+
+            </div>
+
+            <!-- NO DATA -->
+            <div class="empty-state" *ngIf="!loading && goals.length === 0">
+
+                <img src="assets/no-goals.png" alt="No Goals">
+
+                <h2>No Goals Yet</h2>
+
+                <p>
+                    Create your first savings goal and start tracking progress.
+                </p>
+
+            </div>
+
+            <!-- DATA -->
+            <div class="goal-grid" *ngIf="!loading && goals.length > 0">
+
+                <div class="goal-card" *ngFor="let goal of goals">
+
+                    <div class="goal-header">
+
+                        <div>
+
+                            <h3>
+                                {{goal.name}}
+                            </h3>
+
+                            <div class="goal-meta">
+
+                                <div class="deadline-date">
+                                    Deadline: {{ goal.deadline | date:'dd MMM yyyy' }}
+                                </div>
+
+                                <div class="remaining-days">
+                                    {{ getRemainingDays(goal.deadline) }} days remaining
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="goal-actions">
+
+                            <button class="edit-btn" (click)="editGoal(goal)">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+
+                            <button class="fund-btn" (click)="addFund(goal)">
+                                <i class="fa-solid fa-wallet"></i>
+                            </button>
+
+                            <button class="withdraw-btn" (click)="withdrawFund(goal)">
+                                <i class="fa-solid fa-money-bill-transfer"></i>
+                            </button>
+
+                            <button class="delete-btn" (click)="deleteGoal(goal._id)">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="goal-amount-row">
+
+                        <div class="amount-box">
+
+                            <span class="amount-label">
+                                Saved
+                            </span>
+
+                            <h3>
+                                ₹{{goal.saved || 0 | number}}
+                            </h3>
+
+                        </div>
+
+                        <div class="amount-box right">
+
+                            <span class="amount-label">
+                                Target
+                            </span>
+
+                            <h3>
+                                ₹{{goal.target | number}}
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="goal-achieved" *ngIf="goal.saved >= goal.target">
+
+                        🎉 Goal Achieved
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div class="progress" [style.width.%]="
+                    ((goal.saved || 0) / goal.target) * 100
+                    "></div>
+
+                    </div>
+
+                    <div class="goal-footer">
+
+                        <span>
+
+                            {{
+                            ((goal.saved || 0) / goal.target) * 100
+                            | number:'1.0-0'
+                            }}% Completed
+
+                        </span>
+
+                        <span class="remaining">
+
+                            Remaining:
+                            ₹{{goal.target - (goal.saved || 0)}}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,269 @@
+<div class="daily-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="daily-content">
+
+        <!-- FIXED HEADER -->
+        <div class="daily-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="finance-body">
+
+            <div class="tools-grid">
+
+                <div class="tool-card emi" [class.active]="activeTool==='emi'" (click)="setTool('emi')">
+
+                    <i class="fa-solid fa-house"></i>
+                    <h3>EMI</h3>
+                    <span>Loan EMI Calculator</span>
+
+                </div>
+
+                <div class="tool-card sip" [class.active]="activeTool==='sip'" (click)="setTool('sip')">
+
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>SIP</h3>
+                    <span>Mutual Fund Growth</span>
+
+                </div>
+
+                <div class="tool-card fd" [class.active]="activeTool==='fd'" (click)="setTool('fd')">
+
+                    <i class="fa-solid fa-piggy-bank"></i>
+                    <h3>FD</h3>
+                    <span>Fixed Deposit</span>
+
+                </div>
+
+                <div class="tool-card tax" [class.active]="activeTool==='tax'" (click)="setTool('tax')">
+
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <h3>Tax</h3>
+                    <span>Income Tax</span>
+
+                </div>
+
+            </div>
+
+            <div class="calculator-container">
+
+                <!-- LEFT -->
+                <div class="calculator-card">
+
+                    <ng-container [ngSwitch]="activeTool">
+
+                        <!-- EMI -->
+                        <div *ngSwitchCase="'emi'">
+
+                            <h2>EMI Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Loan Amount</label>
+                                <input type="number" [(ngModel)]="loanAmount">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Interest Rate (%)</label>
+                                <input type="number" [(ngModel)]="interestRate">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Loan Years</label>
+                                <input type="number" [(ngModel)]="loanYears">
+                            </div>
+
+                            <button (click)="calculateEMI()">
+                                Calculate EMI
+                            </button>
+
+                        </div>
+
+                        <!-- SIP -->
+                        <div *ngSwitchCase="'sip'">
+
+                            <h2>SIP Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Monthly Investment</label>
+                                <input type="number" [(ngModel)]="sipMonthly">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Expected Return (%)</label>
+                                <input type="number" [(ngModel)]="sipReturn">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Years</label>
+                                <input type="number" [(ngModel)]="sipYears">
+                            </div>
+
+                            <button (click)="calculateSIP()">
+                                Calculate SIP
+                            </button>
+
+                        </div>
+
+                        <!-- FD -->
+                        <div *ngSwitchCase="'fd'">
+
+                            <h2>FD Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Deposit Amount</label>
+                                <input type="number" [(ngModel)]="fdAmount">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Interest Rate (%)</label>
+                                <input type="number" [(ngModel)]="fdRate">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Years</label>
+                                <input type="number" [(ngModel)]="fdYears">
+                            </div>
+
+                            <button (click)="calculateFD()">
+                                Calculate FD
+                            </button>
+
+                        </div>
+
+                        <!-- TAX -->
+                        <div *ngSwitchCase="'tax'">
+
+                            <h2>Tax Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Annual Income</label>
+                                <input type="number" [(ngModel)]="annualIncome">
+                            </div>
+
+                            <button (click)="calculateTax()">
+                                Calculate Tax
+                            </button>
+
+                        </div>
+
+                    </ng-container>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="result-card">
+
+                    <h3>Result</h3>
+
+                    <div *ngIf="activeTool==='emi'">
+
+                        <div class="result-box">
+                            <span>Monthly EMI</span>
+                            <h2>₹{{emiResult | number:'1.0-0'}}</h2>
+                        </div>
+
+                        <div class="result-box">
+                            <span>Total Interest</span>
+                            <h2>₹{{totalInterest | number:'1.0-0'}}</h2>
+                        </div>
+
+                        <div class="result-box">
+                            <span>Total Payment</span>
+                            <h2>₹{{totalPayment | number:'1.0-0'}}</h2>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="activeTool==='sip'">
+
+                        <div class="result-box">
+                            <span>Invested</span>
+                            <h2>₹{{sipInvested | number:'1.0-0'}}</h2>
+                        </div>
+
+                        <div class="result-box">
+                            <span>Gain</span>
+                            <h2>₹{{sipGain | number:'1.0-0'}}</h2>
+                        </div>
+
+                        <div class="result-box">
+                            <span>Maturity</span>
+                            <h2>₹{{sipMaturity | number:'1.0-0'}}</h2>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="activeTool==='fd'">
+
+                        <div class="result-box">
+                            <span>Interest Earned</span>
+                            <h2>₹{{fdInterest | number:'1.0-0'}}</h2>
+                        </div>
+
+                        <div class="result-box">
+                            <span>Maturity Amount</span>
+                            <h2>₹{{fdMaturity | number:'1.0-0'}}</h2>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="activeTool==='tax'">
+
+                        <div class="result-box">
+                            <span>Tax Amount</span>
+                            <h2>₹{{taxAmount | number:'1.0-0'}}</h2>
+                        </div>
+
+                        <div class="result-box">
+                            <span>Net Income</span>
+                            <h2>₹{{netIncome | number:'1.0-0'}}</h2>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

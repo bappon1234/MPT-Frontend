@@ -1,0 +1,455 @@
+/* =======================
+   RESET
+======================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #020817;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* =======================
+   WRAPPER
+======================= */
+.investments-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: #020817;
+    color: white;
+}
+
+/* =======================
+   CONTENT
+======================= */
+.investments-content {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* =======================
+   HEADER
+======================= */
+.investments-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 280px;
+
+    height: 80px;
+    background: #020817;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 22px;
+    z-index: 1000;
+
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.header-left-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-left h2 {
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+.header-left span {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
+    border: none;
+    background: #0f172a;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.header-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* MOBILE MENU */
+.mobile-menu-btn {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 14px;
+    background: #111c31;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* LIGHT MODE */
+.light-theme .header-btn {
+    background: white;
+    color: #0f172a;
+}
+
+/* =======================
+   BODY
+======================= */
+.investments-body {
+    padding: 102px 22px 22px;
+    min-height: 100vh;
+
+    background: radial-gradient(circle at top left, #0f172a, #020817);
+}
+
+/* =======================
+   PAGE TITLE
+======================= */
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    font-size: 42px;
+}
+
+.page-title span {
+    color: #94a3b8;
+}
+
+/* =======================
+   STATS
+======================= */
+.investment-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    padding: 22px;
+    border-radius: 22px;
+    color: white;
+}
+
+.stat-card span {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.stat-card h2 {
+    margin-top: 8px;
+    font-size: 32px;
+}
+
+.invested {
+    background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+}
+
+.value {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+}
+
+.profit {
+    background: linear-gradient(135deg, #22c55e, #14b8a6);
+}
+
+.returns {
+    background: linear-gradient(135deg, #22c55e, #14b8a6);
+}
+
+/* =======================
+   ACTIONS
+======================= */
+.investment-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tabs button {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: #111827;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tabs button.active {
+    background: #8b5cf6;
+    color: white;
+}
+
+.add-investment-btn {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #8b5cf6, #a855f7);
+    color: white;
+    cursor: pointer;
+}
+
+/* =======================
+   HOLDINGS
+======================= */
+.holdings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.holding-card {
+    background: rgba(15,23,42,0.9);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+
+    padding: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.holding-left h3 {
+    font-size: 14px;
+}
+
+.holding-left span {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.holding-right {
+    text-align: right;
+}
+
+.holding-right h2 {
+    font-size: 16px;
+}
+
+.holding-right small {
+    font-weight: 600;
+}
+
+.profit-positive {
+    color: #22c55e !important;
+}
+
+.profit-negative {
+    color: #ef4444 !important;
+}
+
+/* delete */
+.delete-holding {
+    border: none;
+    background: transparent;
+    color: #ef4444;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+/* =======================
+   JOURNAL
+======================= */
+.journal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    min-height: 300px;
+}
+
+/* empty states */
+.empty-state,
+.empty-journal {
+    text-align: center;
+    padding: 60px 20px;
+    color: #94a3b8;
+}
+
+.empty-state i,
+.empty-journal i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+/* =======================
+   TRADE CARD
+======================= */
+.trade-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    padding: 18px 20px;
+    background: #111827;
+
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+
+    transition: 0.3s;
+}
+
+.trade-card:hover {
+    transform: translateY(-2px);
+}
+
+.trade-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.trade-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.trade-header h3 {
+    font-size: 16px;
+}
+
+.trade-prices {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* BUY/SELL */
+.trade-type {
+    display: inline-flex;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.buy {
+    background: rgba(34,197,94,0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.25);
+}
+
+.sell {
+    background: rgba(239,68,68,0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239,68,68,0.25);
+}
+
+/* PNL */
+.trade-pnl {
+    text-align: right;
+}
+
+.trade-pnl small {
+    display: block;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.trade-pnl h2 {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.pnl-profit {
+    color: #22c55e;
+}
+
+.pnl-loss {
+    color: #ef4444;
+}
+
+/* delete trade */
+.delete-trade {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+
+    background: rgba(239,68,68,0.12);
+    color: #ef4444;
+
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.delete-trade:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width: 768px) {
+
+    .investments-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .investments-header {
+        left: 0;
+        padding: 0 16px;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .investment-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .investment-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .holding-card,
+    .trade-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .holding-right,
+    .trade-pnl {
+        text-align: left;
+        width: 100%;
+    }
+}

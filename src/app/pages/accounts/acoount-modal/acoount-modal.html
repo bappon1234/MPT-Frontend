@@ -1,0 +1,106 @@
+<div class="modal-overlay" (click)="close.emit()">
+
+  <div class="account-modal" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+
+      <div>
+        <h2>{{ account ? 'Update Account' : 'Create Account' }}</h2>
+        <span>{{ account ? 'Update account details' : 'Add a new financial account' }}</span>
+      </div>
+
+      <button class="close-btn" (click)="close.emit()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <!-- FORM -->
+    <form (ngSubmit)="createAccount()">
+
+      <!-- NAME -->
+      <div class="form-group">
+        <label>Account Name</label>
+
+        <input
+          type="text"
+          placeholder="HDFC Bank, Cash Wallet..."
+          [(ngModel)]="formData.name"
+          name="name"
+        >
+      </div>
+
+      <!-- TYPE -->
+      <div class="form-group">
+        <label>Account Type</label>
+
+        <select [(ngModel)]="formData.type" name="type">
+          <option value="">Select Account Type</option>
+          <option value="BANK">Bank Account</option>
+          <option value="CASH">Cash</option>
+          <option value="CARD">Credit Card</option>
+          <option value="UPI">UPI Wallet</option>
+          <option value="INVESTMENT">Investment</option>
+        </select>
+      </div>
+
+      <!-- BALANCE -->
+      <div class="form-group">
+        <label>Current Balance</label>
+
+        <input
+          type="number"
+          placeholder="10000"
+          [(ngModel)]="formData.balance"
+          name="balance"
+        >
+      </div>
+
+      <!-- COLOR -->
+      <div class="form-group">
+        <label>Account Color</label>
+
+        <div class="color-list">
+
+          <div
+            *ngFor="let color of colors"
+            class="color"
+            [ngStyle]="{ 'background': color }"
+            [class.active]="formData.color === color"
+            (click)="selectColor(color)"
+          ></div>
+
+        </div>
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="account-preview">
+
+        <div
+          class="preview-icon"
+          [ngStyle]="{ 'background': formData.color }"
+        >
+          {{ formData.name ? formData.name.charAt(0).toUpperCase() : 'A' }}
+        </div>
+
+        <div>
+          <h3>Account Preview</h3>
+
+          <span>
+            ₹{{ formData.balance || 0 | number:'1.2-2' }}
+          </span>
+        </div>
+
+      </div>
+
+      <!-- BUTTON -->
+      <button type="submit" class="save-btn" [disabled]="loading">
+        {{ loading ? (account ? 'Updating...' : 'Creating...' ) : (account ? 'Update Account' : 'Create Account') }}
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

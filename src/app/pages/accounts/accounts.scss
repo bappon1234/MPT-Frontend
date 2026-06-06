@@ -1,0 +1,396 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #020817;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* MAIN */
+
+.accounts-wrapper{
+    display: flex;
+    min-height: 100vh;
+    background: #020817;
+    color: white;
+}
+
+/* CONTENT */
+
+.accounts-content{
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* FIXED HEADER */
+
+.accounts-header{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 280px;
+
+    height: 80px;
+
+    background: #020817;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 22px;
+
+    z-index: 1000;
+
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* BODY */
+
+.accounts-body{
+    padding: 102px 22px 22px;
+}
+
+/* HEADER LEFT */
+
+.header-left-wrap{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-left h2{
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+.header-left span{
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* HEADER RIGHT */
+
+.header-right{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-btn{
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
+    border: none;
+    background: #0f172a;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.header-btn:hover{
+    transform: translateY(-2px);
+}
+
+/* MOBILE MENU BUTTON */
+
+.mobile-menu-btn{
+    display: none;
+
+    width: 48px;
+    height: 48px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: #111c31;
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+    z-index: 2000;
+}
+
+/* LIGHT THEME */
+
+.light-theme .header-btn{
+    background: white;
+    color: #0f172a;
+}
+
+.page-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:40px;
+}
+
+.page-title span{
+    color:#94a3b8;
+}
+
+.add-account-btn{
+    border:none;
+    padding:12px 18px;
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #8b5cf6,
+        #a855f7
+    );
+
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.accounts-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:20px;
+}
+
+.account-card{
+    background:#111827;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:20px;
+    padding:20px;
+}
+
+.account-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.account-icon{
+    width:50px;
+    height:50px;
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-weight:700;
+    font-size:18px;
+}
+
+.account-card h3{
+    margin-bottom:6px;
+}
+
+.account-type{
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.account-card h2{
+    margin-top:16px;
+    font-size:28px;
+}
+
+.action-buttons{
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn{
+    background:none;
+    border:none;
+    color:#efef44;
+    cursor:pointer;
+}
+
+.delete-btn{
+    background:none;
+    border:none;
+    color:#ef4444;
+    cursor:pointer;
+}
+
+.empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.empty-card {
+    background: linear-gradient(145deg, #0f172a, #111827);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 40px 30px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: fadeInUp 0.4s ease;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: white;
+}
+
+.empty-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.empty-card p {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.empty-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.empty-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.skeleton-card{
+    background:#0f172a;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:20px;
+    padding:20px;
+}
+
+.skeleton{
+    position:relative;
+    overflow:hidden;
+    background:#1e293b;
+}
+
+.skeleton::after{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-150px;
+    width:120px;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.08),
+        transparent
+    );
+    animation:skeletonLoading 1.2s infinite;
+}
+
+.skeleton-circle{
+    width:56px;
+    height:56px;
+    border-radius:16px;
+    margin-bottom:20px;
+}
+
+.skeleton-title{
+    height:18px;
+    width:70%;
+    border-radius:8px;
+    margin-bottom:12px;
+}
+
+.skeleton-text{
+    height:14px;
+    width:40%;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.skeleton-balance{
+    height:28px;
+    width:60%;
+    border-radius:10px;
+}
+
+@keyframes skeletonLoading{
+    100%{
+        left:250px;
+    }
+}
+
+@media(max-width:768px){
+
+    .accounts-content{
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .accounts-header{
+        left: 0;
+        height: 76px;
+        padding: 0 16px;
+    }
+
+    .accounts-body{
+        padding: 95px 16px 16px;
+    }
+
+    .mobile-menu-btn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .top-cards{
+        grid-template-columns: 1fr;
+    }
+
+    .header-left h2{
+        font-size: 22px;
+    }
+
+    .header-left span{
+        font-size: 13px;
+    }
+
+}

@@ -1,0 +1,92 @@
+<div class="modal-overlay" (click)="close.emit()">
+
+    <div class="bill-modal" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    {{ bill ? 'Update Bill' : 'Create Bill' }}
+                </h2>
+
+                <span>
+                    Manage your bill reminder
+                </span>
+
+            </div>
+
+            <button class="close-btn" (click)="close.emit()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form (ngSubmit)="saveBill()">
+
+            <div class="form-group">
+
+                <label>Bill Name</label>
+
+                <input type="text" [(ngModel)]="formData.name" name="name">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Amount</label>
+
+                <input type="number" [(ngModel)]="formData.amount" name="amount">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Due Date</label>
+
+                <input type="date" [(ngModel)]="formData.dueDate" name="dueDate">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Category</label>
+
+                <select [(ngModel)]="formData.category" name="category">
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="emi">EMI</option>
+                </select>
+
+            </div>
+
+            <div class="bill-preview">
+
+                <div>
+                    <h4>{{ formData.name || 'Bill Name' }}</h4>
+                    <small>{{ formData.category || 'Category' }}</small>
+                </div>
+
+                <span>
+                    ₹{{ formData.amount || 0 | number }}
+                </span>
+
+            </div>
+
+            <button type="submit" class="save-btn">
+
+                {{
+                loading
+                ? 'Saving...'
+                : bill
+                ? 'Update Bill'
+                : 'Create Bill'
+                }}
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

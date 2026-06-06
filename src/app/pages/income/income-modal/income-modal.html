@@ -1,0 +1,72 @@
+<div class="modal-overlay" (click)="close.emit()">
+
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2>Add Income</h2>
+      <button class="close-btn" (click)="close.emit()">×</button>
+    </div>
+
+    <form (ngSubmit)="submit()" class="modal-form">
+
+      <!-- TITLE -->
+      <input
+        type="text"
+        placeholder="Income Title"
+        [(ngModel)]="form.title"
+        name="title"
+        required
+      />
+
+      <!-- CATEGORY (IMPORTANT) -->
+      <select [(ngModel)]="form.source" name="source" required>
+        <option value="">Select Category</option>
+        <option value="Salary">Salary</option>
+        <option value="Business">Business</option>
+        <option value="Freelance">Freelance</option>
+        <option value="Investments">Investments</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <!-- AMOUNT -->
+      <input
+        type="number"
+        placeholder="Amount (₹)"
+        [(ngModel)]="form.amount"
+        name="amount"
+        required
+      />
+
+      <!-- NOTE (OPTIONAL) -->
+      <input
+        type="text"
+        placeholder="Note (optional)"
+        [(ngModel)]="form.note"
+        name="note"
+      />
+
+      <!-- DATE -->
+      <input
+        type="date"
+        [(ngModel)]="form.date"
+        name="date"
+      />
+
+      <!-- ACTIONS -->
+      <div class="actions">
+
+        <button type="button" class="cancel" (click)="close.emit()">
+          Cancel
+        </button>
+
+        <button type="submit" class="save" [disabled]="loading">
+          {{ loading ? 'Saving...' : 'Save Income' }}
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

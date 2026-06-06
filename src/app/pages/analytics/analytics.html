@@ -1,0 +1,61 @@
+<div class="analytics-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="analytics-content">
+
+        <!-- FIXED HEADER -->
+        <div class="analytics-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button
+                    class="mobile-menu-btn"
+                    (click)="sidebar.toggleSidebar()"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+                        <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button
+                    class="header-btn"
+                    (click)="toggleTheme()"
+                >
+                    <i
+                        class="fa-solid"
+                        [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"
+                    ></i>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="analytics-body">
+
+        </div>
+    </div>
+</div>

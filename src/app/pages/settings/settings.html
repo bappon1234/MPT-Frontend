@@ -1,0 +1,212 @@
+<div class="settings-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="settings-content">
+
+        <!-- FIXED HEADER -->
+        <div class="settings-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="settings-body">
+
+            <div class="settings-grid">
+
+                <!-- PROFILE -->
+                <div class="settings-card profile-card">
+
+                    <h3>Profile</h3>
+
+                    <div class="profile-top">
+
+                        <div class="avatar">
+                            {{ user?.name?.charAt(0) || 'D' }}
+                        </div>
+
+                        <div>
+                            <h4>{{ user?.name }}</h4>
+                            <span>{{ user?.plan }}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" [(ngModel)]="user.name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" [(ngModel)]="user.email">
+                    </div>
+
+                    <button class="primary-btn" (click)="saveProfile()">
+                        Save Profile
+                    </button>
+
+                </div>
+
+                <!-- PREFERENCES -->
+                <div class="settings-card">
+
+                    <h3>Preferences</h3>
+
+                    <div class="preference-row">
+
+                        <div>
+                            <h4>Dark Mode</h4>
+                            <span>Easier on the eyes at night</span>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox" [checked]="isDarkMode" (change)="toggleTheme()">
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                    <div class="preference-row">
+
+                        <div>
+                            <h4>Language</h4>
+                        </div>
+
+                        <select>
+                            <option>English</option>
+                            <option>Hindi</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BACKUP -->
+            <div class="settings-card full-card">
+
+                <h3>Backup & Restore</h3>
+
+                <p>
+                    Export all your data as JSON,
+                    or restore from a backup.
+                </p>
+
+                <div class="backup-actions">
+
+                    <button class="action-btn">
+                        <i class="fa-solid fa-download"></i>
+                        Export Backup
+                    </button>
+
+                    <button class="action-btn">
+                        <i class="fa-solid fa-upload"></i>
+                        Import Backup
+                    </button>
+
+                    <button class="danger-btn">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        Reset Data
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- SUBSCRIPTION -->
+            <div class="settings-card full-card">
+
+                <h3>Subscription</h3>
+
+                <div class="plans">
+
+                    <div class="plan-card" [class.active]="user?.plan === 'FREE'">
+
+                        <h4>Free</h4>
+
+                        <button (click)="switchPlan('FREE')">
+                            {{
+                            user?.plan === 'FREE'
+                            ? 'Current'
+                            : 'Switch'
+                            }}
+                        </button>
+
+                    </div>
+
+                    <div class="plan-card" [class.active]="
+                        user?.plan === 'SIX_MONTH'
+                          ">
+
+                        <h4>Pro</h4>
+
+                        <button (click)="switchPlan('SIX_MONTH')">
+                            {{
+                            user?.plan === 'SIX_MONTH'
+                            ? 'Current'
+                            : 'Switch'
+                            }}
+                        </button>
+
+                    </div>
+
+                    <div class="plan-card" [class.active]="
+                       user?.plan === 'LIFETIME'
+                       ">
+
+                        <h4>Lifetime</h4>
+
+                        <button (click)="switchPlan('LIFETIME')">
+                            {{
+                            user?.plan === 'LIFETIME'
+                            ? 'Current'
+                            : 'Switch'
+                            }}
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="accounts-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="accounts-content">
+
+        <!-- FIXED HEADER -->
+        <div class="accounts-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="accounts-body">
+
+            <app-acoount-modal *ngIf="showModal" [account]="selectedAccount" (close)="closeModal()"
+                (accountCreated)="refreshAccounts()">
+            </app-acoount-modal>
+
+            <div class="page-title">
+
+                <div>
+                    <h1>Accounts</h1>
+                    <span>Manage all your financial accounts</span>
+                </div>
+
+                <button class="add-account-btn" (click)="openModal()">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Account
+                </button>
+
+            </div>
+
+            <!-- SKELETON -->
+            <div class="accounts-grid" *ngIf="loading">
+                <div class="account-card skeleton-card" *ngFor="let item of skeletonCards">
+
+                    <div class="skeleton skeleton-circle"></div>
+
+                    <div class="skeleton skeleton-title"></div>
+
+                    <div class="skeleton skeleton-text"></div>
+
+                    <div class="skeleton skeleton-balance"></div>
+
+                </div>
+            </div>
+
+            <div class="accounts-grid">
+
+                <div class="account-card" *ngFor="let account of accounts">
+
+                    <div class="account-top">
+
+                        <div class="account-icon" [style.background]="account.color">
+                            {{ account.name.charAt(0) }}
+                        </div>
+
+                        <div class="action-buttons">
+
+                            <button class="edit-btn" (click)="openModal(account)">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+
+                            <button class="delete-btn" (click)="deleteAccount(account.id)">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <h3>
+                        {{ account.name }}
+                    </h3>
+
+                    <span class="account-type">
+                        {{ account.type }}
+                    </span>
+
+                    <h2>
+                        ₹{{ account.balance | number }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="accounts.length === 0 && !loading" class="empty-state">
+
+                <div class="empty-card">
+
+                    <div class="empty-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+
+                    <h2>No Accounts Found</h2>
+
+                    <p>
+                        You haven’t added any financial accounts yet.
+                        Start by creating your first account.
+                    </p>
+
+                    <button class="empty-btn" (click)="openModal()">
+                        <i class="fa-solid fa-plus"></i>
+                        Create Account
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

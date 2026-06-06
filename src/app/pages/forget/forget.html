@@ -1,0 +1,127 @@
+<section class="forgot-page">
+
+  <!-- LEFT SIDE -->
+  <div class="forgot-left">
+
+    <div class="overlay"></div>
+
+    <div class="left-content">
+
+      <div class="brand">
+
+        <div class="logo-circle">
+          <img src="/assets/symbol.png" alt="symbol">
+        </div>
+
+        <h2>MY PERSONAL TRACKER</h2>
+
+      </div>
+
+      <span class="badge">
+        PASSWORD RECOVERY
+      </span>
+
+      <h1>
+        Forgot your password?
+      </h1>
+
+      <p>
+        No worries. Enter your registered email address
+        and we will send you a secure password reset link.
+      </p>
+
+      <div class="feature-list">
+
+        <div class="feature-item">
+          <span>✔</span>
+          Secure Reset Process
+        </div>
+
+        <div class="feature-item">
+          <span>✔</span>
+          Instant Recovery Email
+        </div>
+
+        <div class="feature-item">
+          <span>✔</span>
+          Protected Account Access
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="forgot-right">
+
+    <div class="forgot-card">
+
+      <div class="top">
+
+        <h2>Reset Password</h2>
+
+        <p>
+          Enter your email to continue.
+        </p>
+
+      </div>
+
+      <form (ngSubmit)="forgotPassword()">
+
+        <!-- EMAIL -->
+        <div class="input-group">
+
+          <label>Email Address</label>
+
+          <div class="input-box">
+
+            <i class="fa-solid fa-envelope"></i>
+
+            <input
+              type="email"
+              placeholder="Enter your email"
+              [(ngModel)]="email"
+              name="email"
+              required />
+
+          </div>
+
+        </div>
+
+        <!-- BUTTON -->
+        <button
+          type="submit"
+          class="forgot-btn"
+          [disabled]="loading">
+
+          <span
+            class="btn-loader"
+            *ngIf="loading">
+          </span>
+
+          <span *ngIf="!loading">
+            Send Reset Link
+          </span>
+
+        </button>
+
+      </form>
+
+      <!-- FOOTER -->
+      <div class="bottom-text">
+
+        Remember your password?
+
+        <a routerLink="/login">
+          Login
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

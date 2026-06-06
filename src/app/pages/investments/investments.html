@@ -1,0 +1,212 @@
+<div class="investments-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- CONTENT -->
+    <div class="investments-content">
+
+        <!-- HEADER -->
+        <div class="investments-header">
+
+            <div class="header-left-wrap">
+
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+                    <h2>Welcome Back</h2>
+                    <span>{{ user?.name }}</span>
+                </div>
+
+            </div>
+
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="investments-body">
+
+            <!-- TITLE -->
+            <div class="page-title">
+                <h1>Investments</h1>
+                <span>Portfolio & trading journal</span>
+            </div>
+
+            <!-- STATS -->
+            <div class="investment-stats">
+
+                <div class="stat-card invested">
+                    <span>INVESTED</span>
+                    <h2>₹{{ totalInvested | number }}</h2>
+                </div>
+
+                <div class="stat-card value">
+                    <span>CURRENT VALUE</span>
+                    <h2>₹{{ totalCurrent | number }}</h2>
+                </div>
+
+                <div class="stat-card profit">
+                    <span>P&L</span>
+                    <h2>₹{{ totalProfit | number }}</h2>
+                </div>
+
+                <div class="stat-card returns">
+                    <span>RETURN %</span>
+                    <h2>{{ returnPercentage | number:'1.0-2' }}%</h2>
+                </div>
+
+            </div>
+
+            <!-- MODAL -->
+            <app-investment-modal
+                *ngIf="showModal"
+                [mode]="modalMode"
+                (close)="closeModal()"
+                (investmentCreated)="refreshData()">
+            </app-investment-modal>
+
+            <!-- ACTIONS -->
+            <div class="investment-actions">
+
+                <div class="tabs">
+
+                    <button [class.active]="activeTab === 'holdings'" (click)="changeTab('holdings')">
+                        Holdings
+                    </button>
+
+                    <button [class.active]="activeTab === 'journal'" (click)="changeTab('journal')">
+                        Trading Journal
+                    </button>
+
+                </div>
+
+                <button class="add-investment-btn" (click)="openModal()">
+                    <i class="fa-solid fa-plus"></i>
+                    {{ activeTab === 'holdings' ? 'Add Holding' : 'Log Trade' }}
+                </button>
+
+            </div>
+
+            <!-- ===================== -->
+            <!-- HOLDINGS SECTION -->
+            <!-- ===================== -->
+            <div class="holdings-list" *ngIf="activeTab === 'holdings'">
+
+                <!-- EMPTY STATE -->
+                <div *ngIf="investments.length === 0" class="empty-state">
+                    <i class="fa-solid fa-wallet"></i>
+                    <h3>No Holdings Found</h3>
+                    <p>You haven't added any investments yet.</p>
+                </div>
+
+                <!-- HOLDINGS LIST -->
+                <div class="holding-card" *ngFor="let item of investments">
+
+                    <div class="holding-left">
+                        <h3>{{ item.name }}</h3>
+                        <span>Invested: ₹{{ item.invested | number }}</span>
+                    </div>
+
+                    <div class="holding-right">
+
+                        <h2>₹{{ item.current | number }}</h2>
+
+                        <small
+                            [class.profit-positive]="item.current >= item.invested"
+                            [class.profit-negative]="item.current < item.invested">
+
+                            {{ item.current - item.invested >= 0 ? '+' : '-' }}
+                            ₹{{ Math.abs(item.current - item.invested) | number }}
+
+                        </small>
+
+                    </div>
+
+                    <button class="delete-holding" (click)="deleteInvestment(item.id)">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- ===================== -->
+            <!-- JOURNAL SECTION -->
+            <!-- ===================== -->
+            <div class="journal-section" *ngIf="activeTab === 'journal'">
+
+                <!-- EMPTY STATE -->
+                <div *ngIf="trades.length === 0" class="empty-journal">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>No Trades Yet</h3>
+                    <p>Your trading journal is empty. Start logging trades.</p>
+                </div>
+
+                <!-- TRADE LIST -->
+                <div class="trade-card" *ngFor="let trade of trades">
+
+                    <div class="trade-info">
+
+                        <div class="trade-header">
+
+                            <h3>{{ trade.name }}</h3>
+
+                            <span class="trade-type"
+                                [ngClass]="{
+                                    'buy': trade.type === 'BUY',
+                                    'sell': trade.type === 'SELL'
+                                }">
+
+                                {{ trade.type }}
+
+                            </span>
+
+                        </div>
+
+                        <span class="trade-prices">
+                            Entry ₹{{ trade.entry }}
+                            →
+                            Exit ₹{{ trade.exit }}
+                        </span>
+
+                    </div>
+
+                    <div class="trade-pnl">
+
+                        <small>P&L</small>
+
+                        <h2
+                            [class.pnl-profit]="trade.pnl >= 0"
+                            [class.pnl-loss]="trade.pnl < 0">
+
+                            {{ trade.pnl >= 0 ? '+' : '' }}
+                            ₹{{ trade.pnl | number:'1.0-2' }}
+
+                        </h2>
+
+                    </div>
+
+                    <button class="delete-trade" (click)="deleteTrade(trade.id)">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

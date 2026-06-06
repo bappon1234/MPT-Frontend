@@ -1,0 +1,174 @@
+<div class="modal-overlay" (click)="closeModal()">
+
+    <div
+        class="goal-modal"
+        (click)="$event.stopPropagation()">
+
+        <!-- HEADER -->
+        <div class="modal-header">
+
+            <h2>
+
+                {{
+                mode === 'create'
+                ? 'Create Goal'
+
+                : mode === 'edit'
+                ? 'Edit Goal'
+
+                : mode === 'addFund'
+                ? 'Add Fund'
+
+                : 'Withdraw Fund'
+                }}
+
+            </h2>
+
+            <button
+                class="close-btn"
+                (click)="closeModal()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <!-- FORM -->
+        <form
+            (ngSubmit)="submit()"
+            #goalForm="ngForm">
+
+            <!-- CREATE / EDIT -->
+
+            <ng-container
+                *ngIf="
+                mode === 'create'
+                ||
+                mode === 'edit'
+            ">
+
+                <div class="form-group">
+
+                    <label>
+                        Goal Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        [(ngModel)]="goalData.name"
+                        placeholder="Buy Car"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Target Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="target"
+                        [(ngModel)]="goalData.target"
+                        placeholder="500000"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Deadline
+                    </label>
+
+                    <input
+                        type="date"
+                        name="deadline"
+                        [(ngModel)]="goalData.deadline"
+                        required>
+
+                </div>
+
+            </ng-container>
+
+            <!-- ADD FUND / WITHDRAW -->
+
+            <ng-container
+                *ngIf="
+                mode === 'addFund'
+                ||
+                mode === 'withdrawlFund'
+            ">
+
+                <div class="current-amount">
+
+                    Current Saved:
+                    <strong>
+                        ₹{{goal?.saved || 0}}
+                    </strong>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+
+                        {{
+                        mode === 'addFund'
+                        ? 'Add Amount'
+                        : 'Withdraw Amount'
+                        }}
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="amount"
+                        [(ngModel)]="amount"
+                        placeholder="Enter amount"
+                        required>
+
+                </div>
+
+            </ng-container>
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="save-btn"
+                [disabled]="loading">
+
+                <span *ngIf="!loading">
+
+                    {{
+                    mode === 'create'
+                    ? 'Create Goal'
+
+                    : mode === 'edit'
+                    ? 'Update Goal'
+
+                    : mode === 'addFund'
+                    ? 'Add Fund'
+
+                    : 'Withdraw Fund'
+                    }}
+
+                </span>
+
+                <span *ngIf="loading">
+
+                    Processing...
+
+                </span>
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

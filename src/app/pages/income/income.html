@@ -1,0 +1,134 @@
+<div class="income-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="income-content">
+
+        <!-- FIXED HEADER -->
+        <div class="income-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <app-income-modal *ngIf="showModal" [editMode]="editMode" [editData]="editData" (close)="closeModal()"
+            (saved)="onSaved()">
+        </app-income-modal>
+
+        <div class="income-body">
+
+            <!-- TOP CARDS -->
+            <div class="income-cards">
+
+                <div class="card total">
+                    <h3>Total Income</h3>
+                    <p>₹ {{ getTotalIncome() }}</p>
+                </div>
+
+                <div class="card month">
+                    <h3>This Month</h3>
+                    <p>₹ {{ getMonthlyIncome() }}</p>
+                </div>
+
+                <div class="card avg">
+                    <h3>Average</h3>
+                    <p>₹ {{ getAverageIncome() }}</p>
+                </div>
+
+            </div>
+
+            <!-- ACTION BAR -->
+            <div class="income-actions">
+
+                <input type="text" placeholder="Search income..." [(ngModel)]="searchText" />
+
+                <select [(ngModel)]="selectedCategory">
+                    <option value="All">All</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Business">Business</option>
+                    <option value="Freelance">Freelance</option>
+                </select>
+
+                <button class="add-btn" (click)="openModal()">
+                    + Add Income
+                </button>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="income-table">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Source</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngIf="filteredIncomes().length === 0">
+                            <td colspan="5" style="text-align:center; padding:20px;">
+                                No Income Found
+                            </td>
+                        </tr>
+
+                        <tr *ngFor="let inc of filteredIncomes()">
+                            <td>{{ inc.title }}</td>
+                            <td>{{ inc.source }}</td>
+                            <td>₹ {{ inc.amount }}</td>
+                            <td>{{ inc.date | date }}</td>
+
+                            <td>
+                                <button class="edit" (click)="openEditModal(inc)">Edit</button>
+                                <button class="delete" (click)="deleteIncome(inc.id)">Delete</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+.navbar{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 280px;
+
+  height: 80px;
+  padding: 0 22px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #020817;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+
+  z-index: 1000;
+}
+
+.navbar-left h2{
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.navbar-left span{
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.navbar-right{
+  display: flex;
+  gap: 14px;
+}
+
+.icon-btn{
+  width: 45px;
+  height: 45px;
+  border-radius: 14px;
+  border: none;
+  background: #0f172a;
+  color: white;
+  cursor: pointer;
+}

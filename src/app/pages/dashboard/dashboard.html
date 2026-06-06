@@ -1,0 +1,322 @@
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-content">
+
+        <!-- FIXED HEADER -->
+        <div class="dashboard-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="dashboard-body">
+
+            <!-- TOP CARDS -->
+            <div class="top-cards">
+
+                <!-- CARD -->
+                <div class="top-card purple">
+
+                    <div class="card-top">
+
+                        <span>TOTAL BALANCE</span>
+
+                        <i class="fa-regular fa-credit-card"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.totalBalance }}</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card green">
+
+                    <div class="card-top">
+
+                        <span>TOTAL INCOME</span>
+
+                        <i class="fa-regular fa-circle-check"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.totalIncome }}</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card red">
+
+                    <div class="card-top">
+
+                        <span>TOTAL EXPENSES</span>
+
+                        <i class="fa-regular fa-circle-xmark"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.totalExpenses }}</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card blue">
+
+                    <div class="card-top">
+
+                        <span>TOTAL SAVINGS</span>
+
+                        <i class="fa-regular fa-circle-dot"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.totalSavings }}</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>WEEKLY SPENDING</span>
+
+                        <i class="fa-regular fa-circle"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.weeklySpendingTotal || 0 }}</h2>
+
+                    <p>Portfolio</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>MONTHLY SPENDING</span>
+
+                        <i class="fa-regular fa-circle"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.monthlySpendingTotal || 0 }}</h2>
+
+                    <p>Portfolio</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>INVESTMENTS</span>
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.totalInvestments || 0 }}</h2>
+
+                    <p>Portfolio</p>
+
+                </div>
+
+                <div class="top-card green">
+
+                    <div class="card-top">
+                        <span>ACCOUNT BALANCE</span>
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+
+                    <h2>₹{{ dashboard?.accountBalance || 0 }}</h2>
+
+                    <p>All Accounts</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>HEALTH SCORE</span>
+
+                        <i class="fa-regular fa-heart"></i>
+
+                    </div>
+
+                    <h2>₹{{ dashboard?.healthScore }}</h2>
+
+                    <p>Good</p>
+
+                </div>
+
+            </div>
+
+            <!-- CHART AREA -->
+            <div class="middle-grid">
+
+                <!-- LEFT -->
+                <div class="chart-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Income vs Expenses
+                        </h3>
+
+                    </div>
+
+                    <div class="chart-area">
+                        <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'">
+                        </canvas>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="breakdown-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Category Breakdown
+                        </h3>
+
+                    </div>
+
+                    <div class="circle-chart"></div>
+
+                    <div class="breakdown-list">
+
+                        <div class="break-item" *ngFor="let item of dashboard?.categoryBreakdown">
+                            <span class="dot green-dot"></span>
+                            {{ item.name }} - ₹{{ item.value }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LOWER GRID -->
+            <div class="bottom-grid">
+
+                <!-- DAILY SPENDING -->
+                <div class="spending-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Daily Spending
+                        </h3>
+
+                    </div>
+                    <div class="bars-wrapper">
+
+                        <div class="bar-item" *ngFor="let item of dashboard?.dailySpending">
+
+                            <div class="bar" [style.height.%]="(item.amount / maxDailyAmount) * 100">
+
+                            </div>
+
+                            <span class="bar-label">
+                                {{ item.day | date:'dd' }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- UPCOMING -->
+                <div class="upcoming-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Upcoming Bills
+                        </h3>
+
+                    </div>
+
+                    <div class="bill-card" *ngFor="let bill of dashboard?.upcomingBills">
+                        <div>
+
+                            <h4>
+                                {{ bill.name }}
+                            </h4>
+
+                            <span>
+                                Due {{ bill.dueDate | date:'dd MMM' }}
+                            </span>
+
+                        </div>
+
+                        <strong>
+                            ₹{{ bill.amount }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

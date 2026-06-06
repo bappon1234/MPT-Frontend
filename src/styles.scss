@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// :root {
+//   --bg: #050816;
+//   --card: rgba(255, 255, 255, 0.04);
+
+//   --text: #ffffff;
+//   --muted: #9ca3af;
+
+//   --border: rgba(255, 255, 255, 0.08);
+
+//   --primary: #8b5cf6;
+//   --primary-dark: #6d28d9;
+
+//   --green: #10b981;
+//   --red: #ef4444;
+//   --blue: #3b82f6;
+
+//   --radius: 24px;
+//   --transition: 0.3s ease;
+// }
+
+:root{
+  --bg:#020817;
+  --card:#0f172a;
+  --card-light:#111c31;
+
+  --text:#ffffff;
+  --muted:#94a3b8;
+
+  --green:#22c55e;
+  --red:#ef4444;
+  --blue:#3b82f6;
+  --purple:#8b5cf6;
+  --yellow:#facc15;
+
+  --border:rgba(255,255,255,.08);
+}

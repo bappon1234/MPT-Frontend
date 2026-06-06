@@ -1,0 +1,276 @@
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(2,8,23,.85);
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+
+    animation: fadeIn .25s ease;
+}
+
+.bill-modal{
+    width: 100%;
+    max-width: 540px;
+
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #111827
+    );
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 28px;
+
+    padding: 28px;
+
+    color: white;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        0 0 40px rgba(139,92,246,.12);
+
+    animation: modalShow .3s ease;
+}
+
+/* HEADER */
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    margin-bottom:28px;
+}
+
+.modal-header h2{
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:4px;
+}
+
+.modal-header span{
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.close-btn{
+    width:44px;
+    height:44px;
+
+    border:none;
+    border-radius:14px;
+
+    background:#1e293b;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.close-btn:hover{
+    transform:rotate(90deg);
+    background:#334155;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+    font-weight:500;
+
+    color:#cbd5e1;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:56px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#1e293b;
+
+    color:white;
+
+    padding:0 16px;
+
+    outline:none;
+
+    transition:.25s;
+}
+
+.form-group input::placeholder{
+    color:#64748b;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border:1px solid #8b5cf6;
+
+    box-shadow:
+        0 0 0 3px rgba(139,92,246,.15);
+}
+
+/* PREVIEW CARD */
+
+.bill-preview{
+    margin:22px 0;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.bill-preview h4{
+    font-size:15px;
+}
+
+.bill-preview span{
+    color:#22c55e;
+    font-weight:600;
+}
+
+/* BUTTON */
+
+.save-btn{
+    width:100%;
+    height:58px;
+
+    border:none;
+    border-radius:16px;
+
+    background:linear-gradient(
+        135deg,
+        #8b5cf6,
+        #6366f1
+    );
+
+    color:white;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.save-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(139,92,246,.3);
+}
+
+.save-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* ANIMATION */
+
+@keyframes modalShow{
+
+    from{
+        opacity:0;
+        transform:translateY(25px) scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .bill-modal{
+        max-width:100%;
+        padding:22px;
+        border-radius:22px;
+    }
+
+    .modal-header h2{
+        font-size:22px;
+    }
+
+    .form-group input,
+    .form-group select{
+        height:52px;
+    }
+
+    .save-btn{
+        height:54px;
+    }
+}
+
+@media(max-width:480px){
+
+    .modal-overlay{
+        padding:14px;
+    }
+
+    .bill-modal{
+        padding:18px;
+        border-radius:18px;
+    }
+
+    .modal-header{
+        margin-bottom:20px;
+    }
+
+    .modal-header h2{
+        font-size:20px;
+    }
+
+    .close-btn{
+        width:40px;
+        height:40px;
+    }
+
+    .form-group{
+        margin-bottom:15px;
+    }
+}

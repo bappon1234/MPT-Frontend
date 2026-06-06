@@ -1,0 +1,318 @@
+<div class="daily-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="daily-content">
+
+        <!-- FIXED HEADER -->
+        <div class="daily-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="tools-page">
+
+            <div class="page-header">
+                <h1>Daily Tools</h1>
+                <p>Smart calculators for everyday calculations</p>
+            </div>
+
+            <!-- TOOL CARDS -->
+
+            <div class="tools-grid">
+
+                <div class="tool-card split" [class.active]="activeTool === 'split'" (click)="setTool('split')">
+
+                    <i class="fa-solid fa-users"></i>
+                    <h3>Split Bill</h3>
+                    <span>Divide expenses</span>
+
+                </div>
+
+                <div class="tool-card tip" [class.active]="activeTool === 'tip'" (click)="setTool('tip')">
+
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <h3>Tip</h3>
+                    <span>Calculate gratuity</span>
+
+                </div>
+
+                <div class="tool-card discount" [class.active]="activeTool === 'discount'"
+                    (click)="setTool('discount')">
+
+                    <i class="fa-solid fa-percent"></i>
+                    <h3>Discount</h3>
+                    <span>Find savings</span>
+
+                </div>
+
+                <div class="tool-card currency" [class.active]="activeTool === 'currency'"
+                    (click)="setTool('currency')">
+
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                    <h3>Currency</h3>
+                    <span>Convert money</span>
+
+                </div>
+
+                <div class="tool-card fuel" [class.active]="activeTool === 'fuel'" (click)="setTool('fuel')">
+
+                    <i class="fa-solid fa-gas-pump"></i>
+                    <h3>Fuel</h3>
+                    <span>Trip cost</span>
+
+                </div>
+
+                <div class="tool-card age" [class.active]="activeTool === 'age'" (click)="setTool('age')">
+
+                    <i class="fa-solid fa-cake-candles"></i>
+                    <h3>Age</h3>
+                    <span>Calculate age</span>
+
+                </div>
+
+            </div>
+
+            <!-- CALCULATOR -->
+
+            <div class="calculator-container">
+
+                <!-- LEFT SIDE -->
+                <div class="calculator-card">
+
+                    <ng-container [ngSwitch]="activeTool">
+
+                        <!-- SPLIT -->
+                        <div *ngSwitchCase="'split'">
+
+                            <h2>Split Bill Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Total Amount</label>
+                                <input type="number" [(ngModel)]="splitAmount">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Number of People</label>
+                                <input type="number" [(ngModel)]="splitPeople">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tip Percentage</label>
+                                <input type="number" [(ngModel)]="splitTip">
+                            </div>
+
+                            <button (click)="calculateSplit()">
+                                Calculate Split
+                            </button>
+
+                        </div>
+
+                        <!-- TIP -->
+                        <div *ngSwitchCase="'tip'">
+
+                            <h2>Tip Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Bill Amount</label>
+                                <input type="number" [(ngModel)]="billAmount">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tip Percentage</label>
+                                <input type="number" [(ngModel)]="tipPercent">
+                            </div>
+
+                            <button (click)="calculateTip()">
+                                Calculate Tip
+                            </button>
+
+                        </div>
+
+                        <!-- DISCOUNT -->
+                        <div *ngSwitchCase="'discount'">
+
+                            <h2>Discount Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Original Price</label>
+                                <input type="number" [(ngModel)]="originalPrice">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Discount Percentage</label>
+                                <input type="number" [(ngModel)]="discountPercent">
+                            </div>
+
+                            <button (click)="calculateDiscount()">
+                                Calculate Discount
+                            </button>
+
+                        </div>
+
+                        <!-- CURRENCY -->
+                        <div *ngSwitchCase="'currency'">
+
+                            <h2>Currency Converter</h2>
+
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="number" [(ngModel)]="currencyAmount">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Exchange Rate</label>
+                                <input type="number" [(ngModel)]="currencyRate">
+                            </div>
+
+                            <button (click)="calculateCurrency()">
+                                Convert Currency
+                            </button>
+
+                        </div>
+
+                        <!-- FUEL -->
+                        <div *ngSwitchCase="'fuel'">
+
+                            <h2>Fuel Cost Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Distance (KM)</label>
+                                <input type="number" [(ngModel)]="distance">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mileage (KM/L)</label>
+                                <input type="number" [(ngModel)]="mileage">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Fuel Price (₹/L)</label>
+                                <input type="number" [(ngModel)]="fuelPrice">
+                            </div>
+
+                            <button (click)="calculateFuel()">
+                                Calculate Fuel Cost
+                            </button>
+
+                        </div>
+
+                        <!-- AGE -->
+                        <div *ngSwitchCase="'age'">
+
+                            <h2>Age Calculator</h2>
+
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <input type="date" [(ngModel)]="birthDate">
+                            </div>
+
+                            <button (click)="calculateAge()">
+                                Calculate Age
+                            </button>
+
+                        </div>
+
+                    </ng-container>
+
+                </div>
+
+                <!-- RIGHT SIDE RESULT CARD -->
+                <div class="result-card">
+
+                    <h3>Result</h3>
+
+                    <div *ngIf="activeTool === 'split'">
+                        <h1>₹{{ splitResult | number:'1.2-2' }}</h1>
+                        <span>Per Person</span>
+                    </div>
+
+                    <div *ngIf="activeTool === 'tip'">
+                        <h1>₹{{ totalBill | number:'1.2-2' }}</h1>
+                        <span>Total Bill</span>
+                    </div>
+
+                    <div *ngIf="activeTool === 'discount'">
+                        <h1>₹{{ finalPrice | number:'1.2-2' }}</h1>
+                        <span>Final Price</span>
+                    </div>
+
+                    <div *ngIf="activeTool === 'currency'">
+                        <h1>{{ convertedAmount | number:'1.2-2' }}</h1>
+                        <span>Converted Amount</span>
+                    </div>
+
+                    <div *ngIf="activeTool === 'fuel'">
+                        <h1>₹{{ tripCost | number:'1.2-2' }}</h1>
+                        <span>Trip Cost</span>
+                    </div>
+
+                    <div *ngIf="activeTool === 'age'" class="age-result">
+
+                        <div class="age-main-card">
+
+                            <h1>{{ ageText || '--' }}</h1>
+
+                            <span>
+                                Exact Age
+                            </span>
+
+                        </div>
+
+                        <div class="days-lived-card">
+
+                            <h2>
+                                {{ totalDaysLived | number }}
+                            </h2>
+
+                            <span>
+                                Total Days Lived
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

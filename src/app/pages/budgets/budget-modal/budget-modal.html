@@ -1,0 +1,152 @@
+<div class="budget-modal-overlay" (click)="closeModal()">
+
+  <div class="budget-modal" (click)="$event.stopPropagation()">
+
+    <!-- ================= HEADER ================= -->
+    <div class="modal-header">
+
+      <div>
+        <h2>
+          {{
+            mode === 'add'
+              ? 'Add Budget'
+              : mode === 'edit'
+              ? 'Edit Budget'
+              : 'Add Fund'
+          }}
+        </h2>
+
+        <span>
+          {{
+            mode === 'add'
+              ? 'Create monthly budget'
+              : mode === 'edit'
+              ? 'Update monthly budget'
+              : 'Add money to budget'
+          }}
+        </span>
+      </div>
+
+      <button class="close-btn" (click)="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <!-- ================= FORM ================= -->
+    <form class="budget-form" (ngSubmit)="submit()">
+
+      <!-- ================= ADD / EDIT FORM ================= -->
+      <div *ngIf="mode !== 'fund'">
+
+        <!-- CATEGORY -->
+        <div class="form-group">
+          <label>Category</label>
+
+          <select name="category" [(ngModel)]="budgetData.category">
+            <option value="">Select Category</option>
+            <option>Housing & Rents</option>
+            <option>Food</option>
+            <option>Travel</option>
+            <option>Shopping</option>
+            <option>Bills</option>
+            <option>EMI</option>
+            <option>Investment</option>
+            <option>Entertainment</option>
+            <option>Health</option>
+            <option>Education</option>
+            <option>Utilities</option>
+            <option>Groceries</option>
+            <option>Transportation</option>
+            <option>Dependents</option>
+          </select>
+        </div>
+
+        <!-- LIMIT -->
+        <div class="form-group">
+          <label>Amount</label>
+
+          <input
+            type="number"
+            placeholder="Enter budget amount"
+            name="limit"
+            [(ngModel)]="budgetData.limit">
+        </div>
+
+        <!-- MONTH -->
+        <div class="form-group">
+          <label>Month</label>
+
+          <input
+            type="text"
+            placeholder="May"
+            name="month"
+            [(ngModel)]="budgetData.month">
+        </div>
+
+      </div>
+
+      <!-- ================= FUND FORM ================= -->
+      <div *ngIf="mode === 'fund'">
+
+        <div class="form-group">
+          <label>Add Fund Amount</label>
+
+          <input
+            type="number"
+            placeholder="Enter amount to add"
+            name="fundAmount"
+            [(ngModel)]="fundAmount">
+        </div>
+
+        <div class="fund-info">
+          <p>
+            Current Spent:
+            <b>₹{{ budgetToEdit?.spent }}</b>
+          </p>
+
+          <p>
+            Budget Limit:
+            <b>₹{{ budgetToEdit?.limit }}</b>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ================= ACTION BUTTONS ================= -->
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="closeModal()">
+          Cancel
+        </button>
+
+        <button type="submit" class="save-btn">
+
+          <span *ngIf="!loading">
+
+            {{
+              mode === 'add'
+                ? 'Save Budget'
+                : mode === 'edit'
+                ? 'Update Budget'
+                : 'Add Fund'
+            }}
+
+          </span>
+
+          <span *ngIf="loading">
+            Processing...
+          </span>
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

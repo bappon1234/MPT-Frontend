@@ -1,0 +1,160 @@
+<div class="budgets-wrapper">
+
+  <!-- SIDEBAR -->
+  <app-sidebar #sidebar></app-sidebar>
+
+  <!-- MAIN CONTENT -->
+  <div class="budgets-content">
+
+    <!-- HEADER -->
+    <div class="budgets-header">
+
+      <div class="header-left-wrap">
+
+        <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-left">
+          <h2>Welcome Back</h2>
+          <span>{{user?.name}}</span>
+        </div>
+
+      </div>
+
+      <div class="header-right">
+
+        <button class="header-btn">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+
+        <button class="header-btn" (click)="toggleTheme()">
+          <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- BODY -->
+    <div class="budgets-body">
+
+      <!-- TOP -->
+      <div class="budgets-top">
+
+        <div class="budget-title">
+          <h1>Budgets</h1>
+          <span>May 2026</span>
+        </div>
+
+        <!-- FIXED FUNCTION NAME -->
+        <button class="add-budget-btn" (click)="openAddModal()">
+          <i class="fa-solid fa-plus"></i>
+          Add Budget
+        </button>
+
+      </div>
+
+      <!-- MODAL -->
+      <app-budget-modal
+        *ngIf="showModal"
+        [mode]="modalMode"
+        [budgetToEdit]="selectedBudget"
+        (close)="closeModal()"
+        (refresh)="getBudgets()">
+      </app-budget-modal>
+
+      <!-- LOADER -->
+      <div class="budget-grid" *ngIf="loading">
+
+        <div class="budget-card skeleton-card" *ngFor="let item of [1,2,3,4]">
+
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-amount"></div>
+          <div class="skeleton skeleton-progress"></div>
+          <div class="skeleton skeleton-text"></div>
+
+        </div>
+
+      </div>
+
+      <!-- EMPTY -->
+      <div class="empty-state" *ngIf="!loading && budgets.length === 0">
+
+        <div class="empty-icon">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+
+        <h2>No Budgets Found</h2>
+
+        <p>
+          Start managing your finances by creating your first budget.
+        </p>
+
+        <button class="add-budget-btn" (click)="openAddModal()">
+          <i class="fa-solid fa-plus"></i>
+          Create Budget
+        </button>
+
+      </div>
+
+      <!-- DATA -->
+      <div class="budget-grid" *ngIf="!loading && budgets.length > 0">
+
+        <div class="budget-card" *ngFor="let budget of budgets">
+
+          <div class="card-top">
+
+            <div>
+              <p>{{budget.category}}</p>
+
+              <h2>
+                ₹{{budget.spent}}
+                <span>/ ₹{{budget.limit}}</span>
+              </h2>
+            </div>
+
+            <!-- EDIT -->
+            <button class="edit-btn" (click)="openEditModal(budget)">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+
+            <!-- FUND -->
+            <button class="edit-btn" (click)="openFundModal(budget)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+
+            <!-- DELETE -->
+            <button class="delete-btn" (click)="deleteBudget(budget.id)">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+
+          </div>
+
+          <!-- PROGRESS -->
+          <div class="progress-bar">
+
+            <div class="progress blue"
+              [style.width.%]="(budget.spent / budget.limit) * 100">
+            </div>
+
+          </div>
+
+          <!-- % -->
+          <div class="card-bottom">
+
+            <span>
+              {{
+                ((budget.spent / budget.limit) * 100) | number:'1.0-0'
+              }}% used
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

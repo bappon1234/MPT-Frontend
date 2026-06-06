@@ -1,0 +1,59 @@
+<div class="modal-overlay" (click)="close.emit()">
+
+    <div class="expense-modal" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Add Expense</h2>
+                <p>Create a new expense record</p>
+            </div>
+
+            <button class="close-btn" (click)="close.emit()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="form-group">
+            <label>Expense Title</label>
+            <input
+                placeholder="e.g. Food, Shopping"
+                [(ngModel)]="form.title">
+        </div>
+
+        <div class="form-group">
+            <label>Amount</label>
+            <input
+                type="number"
+                placeholder="₹0.00"
+                [(ngModel)]="form.amount">
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <input
+                placeholder="e.g. Food"
+                [(ngModel)]="form.category">
+        </div>
+
+        <div class="form-group">
+            <label>Note</label>
+            <textarea
+                placeholder="Add description..."
+                [(ngModel)]="form.note">
+            </textarea>
+        </div>
+
+        <button
+            class="save-btn"
+            (click)="createExpense()">
+
+            <i class="fa-solid fa-plus"></i>
+            Add Expense
+
+        </button>
+
+    </div>
+
+</div>

@@ -1,0 +1,147 @@
+<!-- MOBILE MENU BUTTON -->
+<button *ngIf="isSidebarOpen" class="mobile-menu-btn" (click)="toggleSidebar()">
+    <i class="fa-solid fa-xmark"></i>
+</button>
+
+<!-- OVERLAY -->
+<div
+    class="sidebar-overlay"
+    [class.show-overlay]="isSidebarOpen"
+    (click)="toggleSidebar()">
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" [class.mobile-sidebar-open]="isSidebarOpen">
+
+    <!-- LOGO -->
+    <div class="logo-section">
+
+        <div class="logo-circle">
+            <img src="/assets/symbol.png" alt="Logo">
+        </div>
+
+        <div class="logo-text">
+            <h2>MPT</h2>
+            <span>My Personal Tracker</span>
+        </div>
+
+    </div>
+
+    <!-- MENU SCROLL AREA -->
+    <div class="menu-wrapper">
+
+        <ul class="menu">
+
+            <li routerLink="/dashboard" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </li>
+
+            <li routerLink="/expenses" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Expenses</span>
+            </li>
+
+            <li routerLink="/income" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-money-bill-trend-up"></i>
+                <span>Income</span>
+            </li>
+
+            <li routerLink="/budgets" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Budgets</span>
+            </li>
+
+            <li routerLink="/goals" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-bullseye"></i>
+                <span>Goals</span>
+            </li>
+
+            <li routerLink="/investments" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-coins"></i>
+                <span>Investments</span>
+            </li>
+
+            <li routerLink="/accounts" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>Accounts</span>
+            </li>
+
+            <li routerLink="/bills" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <span>Bills</span>
+            </li>
+
+            <li routerLink="/daily-tools" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Daily Tools</span>
+            </li>
+
+            <li routerLink="/finance-tools" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-money-check"></i>
+                <span>Finance Tools</span>
+            </li>
+
+            <li routerLink="/settings" routerLinkActive="active" (click)="closeSidebar()">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </li>
+
+            <li
+                *ngIf="user?.role === 'ADMIN'"
+                routerLink="/admin-dashboard"
+                routerLinkActive="active"
+                class="admin-menu"
+                (click)="closeSidebar()">
+
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Admin Dashboard</span>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+    <!-- PROFILE FIXED -->
+    <div class="profile-section">
+
+        <div class="profile-left">
+
+            <img src="https://i.pravatar.cc/150?img=12" alt="Profile">
+
+            <div class="profile-info">
+
+                <h4>
+                    {{ user?.name || 'Demo User' }}
+                </h4>
+
+                <span>
+                    {{ user?.role || 'DEMO' }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <button
+            class="logout-btn"
+            *ngIf="user?.role !== 'DEMO'"
+            (click)="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+        </button>
+
+        <button
+            class="logout-btn"
+            *ngIf="user?.role === 'DEMO'"
+            routerLink="/login">
+
+            <i class="fa-solid fa-right-to-bracket"></i>
+
+        </button>
+
+    </div>
+
+</aside>

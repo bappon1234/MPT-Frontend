@@ -1,0 +1,375 @@
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-content">
+
+        <!-- FIXED HEADER -->
+        <div class="dashboard-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button
+                    class="mobile-menu-btn"
+                    (click)="sidebar.toggleSidebar()"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button
+                    class="header-btn"
+                    (click)="toggleTheme()"
+                >
+                    <i
+                        class="fa-solid"
+                        [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"
+                    ></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="dashboard-body">
+
+            <!-- TOP CARDS -->
+            <div class="top-cards">
+
+                <!-- CARD -->
+                <div class="top-card purple">
+
+                    <div class="card-top">
+
+                        <span>TOTAL BALANCE</span>
+
+                        <i class="fa-regular fa-credit-card"></i>
+
+                    </div>
+
+                    <h2>₹1,65,514</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card green">
+
+                    <div class="card-top">
+
+                        <span>TOTAL INCOME</span>
+
+                        <i class="fa-regular fa-circle-check"></i>
+
+                    </div>
+
+                    <h2>₹2,47,000</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card red">
+
+                    <div class="card-top">
+
+                        <span>TOTAL EXPENSES</span>
+
+                        <i class="fa-regular fa-circle-xmark"></i>
+
+                    </div>
+
+                    <h2>₹81,486</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card blue">
+
+                    <div class="card-top">
+
+                        <span>TOTAL SAVINGS</span>
+
+                        <i class="fa-regular fa-circle-dot"></i>
+
+                    </div>
+
+                    <h2>₹44,820</h2>
+
+                    <p>This month</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>WEEKLY SPENDING</span>
+
+                        <i class="fa-regular fa-circle"></i>
+
+                    </div>
+
+                    <h2>₹72,840</h2>
+
+                    <p>Portfolio</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>MONTHLY SPENDING</span>
+
+                        <i class="fa-regular fa-circle"></i>
+
+                    </div>
+
+                    <h2>₹72,840</h2>
+
+                    <p>Portfolio</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>INVESTMENTS</span>
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                    </div>
+
+                    <h2>₹72,840</h2>
+
+                    <p>Portfolio</p>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="top-card violet">
+
+                    <div class="card-top">
+
+                        <span>HEALTH SCORE</span>
+
+                        <i class="fa-regular fa-heart"></i>
+
+                    </div>
+
+                    <h2>51/100</h2>
+
+                    <p>Good</p>
+
+                </div>
+
+            </div>
+
+            <!-- CHART AREA -->
+            <div class="middle-grid">
+
+                <!-- LEFT -->
+                <div class="chart-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Income vs Expenses
+                        </h3>
+
+                    </div>
+
+                    <div class="chart-area">
+
+                        <div class="graph-line green-line"></div>
+
+                        <div class="graph-line red-line"></div>
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="breakdown-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Category Breakdown
+                        </h3>
+
+                    </div>
+
+                    <div class="circle-chart"></div>
+
+                    <div class="breakdown-list">
+
+                        <div class="break-item">
+                            <span class="dot green-dot"></span>
+                            EMI
+                        </div>
+
+                        <div class="break-item">
+                            <span class="dot red-dot"></span>
+                            Shopping
+                        </div>
+
+                        <div class="break-item">
+                            <span class="dot blue-dot"></span>
+                            Bills
+                        </div>
+
+                        <div class="break-item">
+                            <span class="dot yellow-dot"></span>
+                            Education
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LOWER GRID -->
+            <div class="bottom-grid">
+
+                <!-- DAILY SPENDING -->
+                <div class="spending-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Daily Spending
+                        </h3>
+
+                    </div>
+
+                    <div class="bars-wrapper">
+
+                        <div class="bar" style="height: 140px;"></div>
+                        <div class="bar" style="height: 50px;"></div>
+                        <div class="bar" style="height: 70px;"></div>
+                        <div class="bar" style="height: 45px;"></div>
+                        <div class="bar" style="height: 120px;"></div>
+                        <div class="bar" style="height: 60px;"></div>
+                        <div class="bar" style="height: 135px;"></div>
+
+                    </div>
+
+                </div>
+
+                <!-- UPCOMING -->
+                <div class="upcoming-box">
+
+                    <div class="box-header">
+
+                        <h3>
+                            Upcoming Bills
+                        </h3>
+
+                    </div>
+
+                    <div class="bill-card">
+
+                        <div>
+
+                            <h4>
+                                Electricity Bill
+                            </h4>
+
+                            <span>
+                                Due May 28
+                            </span>
+
+                        </div>
+
+                        <strong>
+                            ₹2,400
+                        </strong>
+
+                    </div>
+
+                    <div class="bill-card">
+
+                        <div>
+
+                            <h4>
+                                Netflix
+                            </h4>
+
+                            <span>
+                                Due May 29
+                            </span>
+
+                        </div>
+
+                        <strong>
+                            ₹649
+                        </strong>
+
+                    </div>
+
+                    <div class="bill-card">
+
+                        <div>
+
+                            <h4>
+                                Internet Bill
+                            </h4>
+
+                            <span>
+                                Due Jun 01
+                            </span>
+
+                        </div>
+
+                        <strong>
+                            ₹999
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

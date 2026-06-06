@@ -1,0 +1,23 @@
+<div class="navbar">
+
+  <div class="navbar-left">
+
+    <h2>Welcome Back</h2>
+
+    <span>{{ user?.name }}</span>
+
+  </div>
+
+  <div class="navbar-right">
+
+    <button class="icon-btn">
+      <i class="fa-solid fa-bell"></i>
+    </button>
+
+    <button class="icon-btn">
+      <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,528 @@
+<div class="admin-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- CONTENT -->
+    <div class="admin-content">
+
+        <!-- TOPBAR -->
+        <div class="admin-topbar">
+
+            <div class="header-left-wrap">
+
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+                <div class="welcome-box">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{ user?.name }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="topbar-actions">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+
+                    <i class="fa-solid" [ngClass]="
+                            isDarkMode
+                            ? 'fa-sun'
+                            : 'fa-moon'
+                        ">
+                    </i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="admin-body">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Admin Dashboard
+                    </h1>
+
+                    <p>
+                        Manage users,
+                        plans and analytics
+                    </p>
+
+                </div>
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="text" placeholder="Search users..." [(ngModel)]="searchTerm" (input)="filterUsers()">
+
+                </div>
+
+            </div>
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card purple">
+
+                    <span>Total Users</span>
+
+                    <h2>
+                        {{ totalUsers }}
+                    </h2>
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <div class="stat-card green">
+
+                    <span>Premium Users</span>
+
+                    <h2>
+                        {{ premiumUsers }}
+                    </h2>
+
+                    <i class="fa-solid fa-crown"></i>
+
+                </div>
+
+                <div class="stat-card blue">
+
+                    <span>Free Users</span>
+
+                    <h2>
+                        {{ freeUsers }}
+                    </h2>
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div class="stat-card red">
+
+                    <span>Total Plans</span>
+
+                    <h2>
+                        {{ totalUsers }}
+                    </h2>
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+                <div class="stat-card red">
+
+                    <span>Total Earnings</span>
+
+                    <h2>
+                        {{ totalEarnings }}
+                    </h2>
+                    <p>From approved premium plans</p>
+
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                </div>
+
+
+
+            </div>
+
+            <!-- TABLE CARD -->
+
+            <!-- TAB NAVIGATION -->
+            <div class="dashboard-tabs">
+
+                <button class="tab-btn" [class.active]="activeTab === 'users'" (click)="activeTab='users'">
+
+                    <i class="fa-solid fa-users"></i>
+                    <span>All Users</span>
+
+                </button>
+
+                <button class="tab-btn" [class.active]="activeTab === 'requests'" (click)="activeTab='requests'">
+
+                    <i class="fa-solid fa-crown"></i>
+                    <span>Plan Requests</span>
+
+                </button>
+
+                <button class="tab-btn" [class.active]="activeTab === 'prices'" (click)="activeTab='prices'">
+
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <span>Plan Prices</span>
+
+                </button>
+
+            </div>
+
+
+            <!-- ==========================
+     USERS TABLE
+========================== -->
+
+            <div class="table-card" *ngIf="activeTab === 'users'">
+
+                <div class="table-top">
+
+                    <h3>All Users</h3>
+
+                    <select [(ngModel)]="selectedPlan" (change)="filterUsers()">
+
+                        <option value="ALL">
+                            All Plans
+                        </option>
+
+                        <option value="FREE">
+                            Free
+                        </option>
+
+                        <option value="PREMIUM">
+                            Premium
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="loading-state" *ngIf="loading">
+
+                    Loading users...
+
+                </div>
+
+                <div class="table-wrapper" *ngIf="!loading">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Plan</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="
+                    let user of filteredUsers;
+                    trackBy: trackByUser
+                ">
+
+                                <td>
+
+                                    <div class="user-info">
+
+                                        <img [src]="
+                                'https://ui-avatars.com/api/?name=' +
+                                user.name +
+                                '&background=6366f1&color=fff'
+                            ">
+
+                                        <span>
+                                            {{ user.name }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                                <td>{{ user.email }}</td>
+
+                                <td>
+
+                                    <span class="plan" [ngClass]="{
+                            premium:user.plan==='PREMIUM',
+                            free:user.plan==='FREE'
+                        }">
+
+                                        {{ user.plan }}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    {{ user.createdAt | date:'dd MMM yyyy' }}
+                                </td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <button class="edit-btn" (click)="changePlan(user.id,user.plan)">
+
+                                            <i class="fa-solid fa-crown"></i>
+
+                                        </button>
+
+                                        <button class="delete-btn" (click)="deleteUser(user.id)">
+
+                                            <i class="fa-solid fa-trash"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr *ngIf="filteredUsers.length===0">
+
+                                <td colspan="5" class="empty-row">
+
+                                    No Users Found
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==========================
+     PLAN REQUESTS
+========================== -->
+
+            <div class="table-card" *ngIf="activeTab === 'requests'">
+
+                <div class="table-top">
+
+                    <h3>Plan Requests</h3>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>User</th>
+                                <th>Plan</th>
+                                <th>UTR</th>
+                                <th>Status</th>
+                                <th>Screenshot</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="
+                    let request of planRequests
+                ">
+
+                                <td>
+                                    {{ request.user?.name }}
+                                </td>
+
+                                <td>
+                                    {{ request.planType || request.plan || request.planName }}
+                                </td>
+
+                                <td>
+                                    {{ request.utr }}
+                                </td>
+
+                                <td>
+
+                                    <span class="status-badge" [ngClass]="{
+                                pending:
+                                request.status==='PENDING',
+
+                                approved:
+                                request.status==='APPROVED',
+
+                                rejected:
+                                request.status==='REJECTED'
+                            }">
+
+                                        {{ request.status }}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button class="view-btn" (click)="openImage(request.screenshot)">
+
+                                        View
+
+                                    </button>
+
+                                </td>
+
+                                <td>
+                                    <div class="request-button">
+
+                                        <button *ngIf="request.status==='PENDING'" class="edit-btn"
+                                            (click)="approveRequest(request.id)">
+
+                                            Approve
+
+                                        </button>
+
+                                        <button *ngIf="request.status==='PENDING'" class="delete-btn"
+                                            (click)="rejectRequest(request.id)">
+
+                                            Reject
+
+                                        </button>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr *ngIf="planRequests.length===0">
+
+                                <td colspan="6" class="empty-row">
+
+                                    No Plan Requests Found
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-card" *ngIf="activeTab === 'prices'">
+
+                <div class="table-top">
+                    <h3>💰 Plan Price Management</h3>
+                </div>
+
+                <!-- FORM CARD -->
+                <div class="price-container">
+
+                    <!-- LEFT: FORM -->
+                    <div class="price-card glass">
+
+                        <div class="card-header">
+                            <h4>💰 Plan Pricing Control</h4>
+                            <p>Update subscription pricing dynamically</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Plan</label>
+                            <select [(ngModel)]="priceForm.plan">
+                                <option value="FREE">FREE</option>
+                                <option value="SIX_MONTH">6 MONTH</option>
+                                <option value="ONE_YEAR">1 YEAR</option>
+                                <option value="LIFETIME">LIFETIME</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price (₹)</label>
+                            <input type="number" [(ngModel)]="priceForm.price" placeholder="Enter price">
+                        </div>
+
+                        <button class="save-btn" (click)="savePrice()">
+    💾 Save / Update Price
+</button>
+
+                    </div>
+
+                    <!-- RIGHT: PREMIUM LIST -->
+                    <div class="price-list glass">
+
+                        <h4>📊 Live Plan Pricing</h4>
+
+                        <div class="price-grid">
+
+                            <div class="price-box" *ngFor="let p of planPrices" [ngClass]="{
+          active: p.plan === priceForm.plan
+        }">
+
+                                <div class="plan-title">
+                                    {{ p.plan }}
+                                </div>
+
+                                <div class="plan-value">
+                                    ₹ {{ p.price }}
+                                </div>
+
+                                <span class="badge">
+                                    Active
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE MODAL -->
+
+            <div class="image-modal" *ngIf="selectedImage" (click)="closeImage()">
+
+                <img [src]="
+        'http://localhost:5000/uploads/' +
+        selectedImage
+    " class="modal-image" (click)="$event.stopPropagation()">
+
+            </div>
+            <!-- PLAN REQUESTS -->
+
+
+
+        </div>
+
+    </div>
+
+</div>

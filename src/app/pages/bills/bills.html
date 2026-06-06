@@ -1,0 +1,206 @@
+<div class="bills-wrapper">
+
+    <!-- SIDEBAR -->
+    <app-sidebar #sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT -->
+    <div class="bills-content">
+
+        <!-- FIXED HEADER -->
+        <div class="bills-header">
+
+            <!-- LEFT -->
+            <div class="header-left-wrap">
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" (click)="sidebar.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="header-left">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        {{user?.name}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="header-right">
+
+                <button class="header-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="header-btn" (click)="toggleTheme()">
+                    <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <app-bill-modal *ngIf="showModal" [bill]="selectedBill" (close)="closeModal()" (saved)="refreshBills()">
+        </app-bill-modal>
+
+        <div class="bills-body">
+
+            <div class="bills-container">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Bills & Reminders</h1>
+                        <span>
+                            {{
+                            bills.filter(
+                            bill => !bill.paid
+                            ).length
+                            }}
+                            Pending Bills
+                        </span>
+                    </div>
+
+                    <button class="add-bill-btn" (click)="openModal()">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Bill
+                    </button>
+
+                </div>
+
+                <!-- Skeleton -->
+                <div *ngIf="loading" class="bill-list">
+
+                    <div class="bill-card skeleton-card" *ngFor="let item of [1,2,3,4,5]">
+                        <div class="skeleton skeleton-circle"></div>
+
+                        <div class="skeleton-content">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-text"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Bills -->
+                <div *ngIf="!loading && bills.length > 0" class="bill-list">
+
+                    <div class="bill-card" *ngFor="let bill of bills">
+
+                        <div class="bill-left">
+
+                            <div class="bill-icon" [class.paid]="bill.paid">
+
+                                <i *ngIf="bill.paid" class="fa-solid fa-circle-check"></i>
+
+                                <i *ngIf="
+      !bill.paid &&
+      getDaysLeft(bill.dueDate) < 0
+    " class="fa-solid fa-triangle-exclamation"></i>
+
+                                <i *ngIf="
+      !bill.paid &&
+      getDaysLeft(bill.dueDate) >= 0
+    " class="fa-solid fa-clock"></i>
+
+                            </div>
+
+                            <div>
+
+                                <div class="bill-info">
+
+                                    <h3>
+                                        {{ bill.name }}
+                                    </h3>
+
+                                    <div class="bill-meta">
+
+                                        <span class="category-tag">
+                                            {{ bill.category }}
+                                        </span>
+
+                                        <span class="status-tag" [class.paid-status]="bill.paid" [class.overdue-status]="
+      !bill.paid &&
+      getDaysLeft(bill.dueDate) < 0
+    ">
+                                            {{ getBillStatus(bill) }}
+                                        </span>
+
+                                    </div>
+
+                                    <p>
+                                        Due
+                                        {{ bill.dueDate | date:'MMM dd, yyyy' }}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="bill-right">
+
+                            <div class="amount-box">
+
+                                ₹{{ bill.amount | number }}
+
+                            </div>
+
+                            <!-- <button class="status-btn" (click)="togglePaidStatus(bill)">
+                                {{ bill.paid ? 'Mark unpaid' : 'Mark paid' }}
+                            </button> -->
+                            <button class="status-btn" [class.paid-btn]="bill.paid" [class.unpaid-btn]="!bill.paid"
+                                (click)="togglePaidStatus(bill)">
+
+                                <i class="fa-solid" [ngClass]="
+          bill.paid
+          ? 'fa-check'
+          : 'fa-clock'
+        "></i>
+
+                                {{ bill.paid ? 'Paid' : 'Pending' }}
+
+                            </button>
+
+                            <button class="edit-btn" (click)="openModal(bill)">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+
+                            <button class="delete-btn" (click)="deleteBill(bill.id)">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div *ngIf="!loading && bills.length === 0" class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+
+                    <h3>No Bills Found</h3>
+
+                    <p>
+                        You haven't created any bills yet.
+                        Add your first bill reminder to get started.
+                    </p>
+
+                    <button class="add-bill-btn" (click)="openModal()">
+                        <i class="fa-solid fa-plus"></i>
+                        Create First Bill
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

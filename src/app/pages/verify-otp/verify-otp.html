@@ -1,0 +1,140 @@
+<section class="otp-page">
+
+    <!-- LEFT SIDE -->
+    <div class="otp-left">
+
+        <div class="overlay"></div>
+
+        <div class="left-content">
+
+            <div class="brand">
+
+                <div class="logo-circle">
+                    <img src="/assets/symbol.png" alt="symbol">
+                </div>
+
+                <h2>MY PERSONAL TRACKER</h2>
+
+            </div>
+
+            <span class="badge">
+                OTP VERIFICATION
+            </span>
+
+            <h1>
+                Verify your OTP
+                securely & quickly.
+            </h1>
+
+            <p>
+                We have sent a 6-digit verification code
+                to your registered email address.
+            </p>
+
+            <div class="feature-list">
+
+                <div class="feature-item">
+                    <span>✔</span>
+                    Fast Verification
+                </div>
+
+                <div class="feature-item">
+                    <span>✔</span>
+                    Secure Recovery Process
+                </div>
+
+                <div class="feature-item">
+                    <span>✔</span>
+                    Protected Account Access
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="otp-right">
+
+        <div class="otp-card">
+
+            <div class="top">
+
+                <h2>Enter OTP</h2>
+
+                <p>
+                    Please enter the 6-digit code sent to your email.
+                </p>
+
+            </div>
+
+            <form (ngSubmit)="verifyOtp()">
+
+                <!-- OTP BOXES -->
+                <div class="otp-container">
+
+                    <input #otpInput type="text" maxlength="1" class="otp-input" [(ngModel)]="otp1" name="otp1"
+                        (input)="moveNext($event)" required>
+
+                    <input #otpInput type="text" maxlength="1" class="otp-input" [(ngModel)]="otp2" name="otp2"
+                        (input)="moveNext($event)" required>
+
+                    <input #otpInput type="text" maxlength="1" class="otp-input" [(ngModel)]="otp3" name="otp3"
+                        (input)="moveNext($event)" required>
+
+                    <input #otpInput type="text" maxlength="1" class="otp-input" [(ngModel)]="otp4" name="otp4"
+                        (input)="moveNext($event)" required>
+
+                    <input #otpInput type="text" maxlength="1" class="otp-input" [(ngModel)]="otp5" name="otp5"
+                        (input)="moveNext($event)" required>
+
+                    <input #otpInput type="text" maxlength="1" class="otp-input" [(ngModel)]="otp6" name="otp6"
+                        (input)="moveNext($event)" required>
+
+                </div>
+
+                <!-- VERIFY BUTTON -->
+                <button type="submit" class="verify-btn" [disabled]="loading">
+
+                    <span *ngIf="loading">
+                        Verifying...
+                    </span>
+
+                    <span *ngIf="!loading">
+                        Verify OTP
+                    </span>
+
+                </button>
+
+                <!-- RESEND -->
+                <div class="resend-text">
+
+                    Didn't receive the code?
+
+                    <a href="javascript:void(0)" (click)="resendOtp()">
+
+                        Resend OTP
+
+                    </a>
+
+                </div>
+
+            </form>
+
+            <!-- FOOTER -->
+            <div class="bottom-text">
+
+                Back to
+
+                <a routerLink="/login">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
