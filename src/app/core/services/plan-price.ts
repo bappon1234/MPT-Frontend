@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanPriceService {
 
-  API = "http://localhost:5000/api/plan-price";
+   private apiUrl = `${environment.apiUrl}/plan-price`;
 
   constructor(private http: HttpClient) {}
 
@@ -23,13 +24,13 @@ export class PlanPriceService {
 
   // GET ALL PRICES
   getPlanPrices(): Observable<any[]> {
-    return this.http.get<any[]>(this.API, this.getHeaders());
+    return this.http.get<any[]>(this.apiUrl, this.getHeaders());
   }
 
   // UPSERT PRICE
   upsertPlanPrice(data: { plan: string; price: number }): Observable<any> {
     return this.http.post(
-      `${this.API}/upsert`,
+      `${this.apiUrl}/upsert`,
       data,
       this.getHeaders()
     );

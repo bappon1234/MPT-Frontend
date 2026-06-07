@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import axios from "axios";
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
-  API = "http://localhost:5000/api/auth";
+ private apiUrl = `${environment.apiUrl}/auth`;
 
   async register(data:any){
-    return await axios.post(`${this.API}/register`, data);
+    return await axios.post(`${this.apiUrl}/register`, data);
   }
 
   async login(data:any){
-    return await axios.post(`${this.API}/login`, data);
+    return await axios.post(`${this.apiUrl}/login`, data);
   }
 
   async googleLogin(token: string){
-    return await axios.post(`${this.API}/google`, {token});
+    return await axios.post(`${this.apiUrl}/google`, {token});
   }
 
   logout(){
@@ -25,15 +26,15 @@ export class Auth {
   }
 
   async forgotPassword(data: any) {
-  return await axios.post(`${this.API}/forgot-password`, data );
+  return await axios.post(`${this.apiUrl}/forgot-password`, data );
   }
 
     async verifyOtp(data: any) {
-    return await axios.post(`${this.API}/verify-otp`, data);
+    return await axios.post(`${this.apiUrl}/verify-otp`, data);
   }
 
   async resetPassword(data: any) {
-    return await axios.post(`${this.API}/reset-password`, data);
+    return await axios.post(`${this.apiUrl}/reset-password`, data);
   }
 
 

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Admin {
-  API = "http://localhost:5000/api/admin";
+   private apiUrl = `${environment.apiUrl}/admin`;
 
   getToken(){
     return localStorage.getItem('token');
@@ -21,7 +22,7 @@ export class Admin {
 
   async getAllUsers(){
     try{
-      const response = await axios.get(`${this.API}/users`, this.getHeaders());
+      const response = await axios.get(`${this.apiUrl}/users`, this.getHeaders());
       return response.data;
     }catch(error:any){
       console.log(error.response?.data || error);
@@ -34,7 +35,7 @@ export class Admin {
     try{
 
       const response = await axios.put(
-        `${this.API}/plan/${userId}`,
+        `${this.apiUrl}/plan/${userId}`,
         { plan },
         this.getHeaders()
       );
@@ -56,7 +57,7 @@ export class Admin {
     try{
 
       const response = await axios.delete(
-        `${this.API}/user/${userId}`,
+        `${this.apiUrl}/user/${userId}`,
         this.getHeaders()
       );
 
